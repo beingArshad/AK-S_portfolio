@@ -14,6 +14,9 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.155.0/three.min.js"></script>
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -54,6 +57,7 @@
         <!-- Hero Section -->
         <section id="home" class="hero">
             <canvas id="particle-canvas"></canvas>
+            <div id="three-js-container"></div>
             <div class="hero-content reveal">
                 <h3 class="hero-greeting">Hello World, I'm</h3>
                 <h1 class="hero-name">P. Arshad Khan</h1>
@@ -62,9 +66,6 @@
                 
                 <div class="hero-actions">
                     <a href="#projects" class="btn btn-primary">View Projects</a>
-                    <a href="#" class="btn btn-outline" download>
-                        Download Resume <i class="fa-solid fa-download"></i>
-                    </a>
                 </div>
                 
                 <div class="social-links">
@@ -92,8 +93,7 @@
                         <div class="about-card-grid">
                             <div class="about-image">
                                 <div class="image-frame">
-                                    <img src="assets/images/khan.jpeg" alt="P. Arshad Khan portrait" class="profile-image">
-                                    <div class="image-overlay"></div>
+                                    <img src="assets/images/arshad.jpg" alt="P. Arshad Khan portrait" class="profile-image">
                                 </div>
                             </div>
                             <div class="about-copy">
@@ -120,18 +120,6 @@
                             </div>
                         </div>
                         <div class="about-extra">
-                            <div class="extra-card certifications glass-card">
-                                <h3>Certifications</h3>
-                                <ul class="extra-list">
-                                    <li><strong>Web Development for Beginners</strong><span>Simplilearn, 2026</span></li>
-                                    <li><strong>Python Intro Course</strong><span>Simplilearn, 2026</span></li>
-                                    <li><strong>Communication Skills</strong><span>Nexademy, 2026</span></li>
-                                    <li><strong>Spoken English</strong><span>Simplilearn, 2026</span></li>
-                                    <li><strong>Introduction to HTML</strong><span>Simplilearn, 2025</span></li>
-                                    <li><strong>Introduction to CSS</strong><span>Simplilearn, 2025</span></li>
-                                    <li><strong>Public Speaking</strong><span>Simplilearn, 2025</span></li>
-                                </ul>
-                            </div>
                             <div class="extra-card languages glass-card">
                                 <h3>Languages</h3>
                                 <ul class="extra-list">
@@ -142,12 +130,24 @@
                             </div>
                             <div class="extra-card hobbies glass-card">
                                 <h3>Hobbies &amp; Interests</h3>
-                                <ul class="extra-list">
-                                    <li>Reading and learning about new technologies</li>
-                                    <li>Playing cricket</li>
-                                    <li>Playing PlayStation games</li>
-                                    <li>Exploring biological facts</li>
-                                </ul>
+                                <div class="hobbies-grid">
+                                    <div class="hobby-item">
+                                        <i class="fa-solid fa-microchip"></i>
+                                        <span>Tech Learning</span>
+                                    </div>
+                                    <div class="hobby-item">
+                                        <i class="fa-solid fa-baseball-bat-ball"></i>
+                                        <span>Cricket</span>
+                                    </div>
+                                    <div class="hobby-item">
+                                        <i class="fa-solid fa-gamepad"></i>
+                                        <span>Gaming</span>
+                                    </div>
+                                    <div class="hobby-item">
+                                        <i class="fa-solid fa-dna"></i>
+                                        <span>Biology</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -155,7 +155,77 @@
             </div>
         </section>
 
-        <!-- Skills Section -->
+        <!-- Achievements Section (Bento Grid) -->
+        <section id="achievements" class="achievements">
+            <div class="container">
+                <h2 class="section-title reveal">Key <span class="neon-text">Highlights</span></h2>
+                
+                <div class="bento-grid reveal">
+                    <!-- Certifications Bento Card -->
+                    <div class="bento-item certifications-bento glass-card">
+                        <h3>Expertise & Certifications</h3>
+                        <div class="cert-logos-grid">
+                            <div class="cert-logo-item" title="Web Development">
+                                <i class="fa-solid fa-code"></i>
+                                <span>Web Dev</span>
+                            </div>
+                            <div class="cert-logo-item" title="Python Programming">
+                                <i class="fa-brands fa-python"></i>
+                                <span>Python</span>
+                            </div>
+                            <div class="cert-logo-item" title="Communication Skills">
+                                <i class="fa-solid fa-comments"></i>
+                                <span>Comm.</span>
+                            </div>
+                            <div class="cert-logo-item" title="HTML5">
+                                <i class="fa-brands fa-html5"></i>
+                                <span>HTML5</span>
+                            </div>
+                            <div class="cert-logo-item" title="CSS3">
+                                <i class="fa-brands fa-css3-alt"></i>
+                                <span>CSS3</span>
+                            </div>
+                            <div class="cert-logo-item" title="Public Speaking">
+                                <i class="fa-solid fa-microphone-lines"></i>
+                                <span>Speaking</span>
+                            </div>
+                        </div>
+                        <p class="cert-issuer-text">Certified by <span class="highlight">Simplilearn</span> & <span class="highlight">Nexademy</span></p>
+                    </div>
+                    
+                    <div class="bento-item location glass-card">
+                        <div class="location-content">
+                            <h3>Based In</h3>
+                            <p>Hyderabad, India</p>
+                            <div class="map-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-location-dot bento-icon"></i>
+                    </div>
+                    
+                    <div class="bento-item availability glass-card">
+                        <div class="status-indicator">
+                            <div class="pulse-dot"></div>
+                            <span>Open for Internships</span>
+                        </div>
+                        <h3>Available Now</h3>
+                        <p>Looking for Full Stack roles</p>
+                    </div>
+                    
+                    <div class="bento-item stats-bento glass-card">
+                        <div class="stat-row">
+                            <span class="stat-val">7+</span>
+                            <span class="stat-lab">Certifications</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-val">2+</span>
+                            <span class="stat-lab">Major Projects</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section id="skills" class="skills">
             <div class="container">
                 <h2 class="section-title reveal">Technical <span class="neon-text">Skills</span></h2>

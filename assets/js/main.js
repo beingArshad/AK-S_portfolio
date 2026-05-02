@@ -38,14 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const clickables = document.querySelectorAll('a, button, input, textarea, .glass-card');
         clickables.forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                cursorOutline.style.backgroundColor = 'rgba(189, 0, 255, 0.1)';
-                cursorOutline.style.borderColor = 'var(--neon-cyan)';
+                cursorOutline.style.width = '70px';
+                cursorOutline.style.height = '70px';
+                cursorOutline.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
             });
             el.addEventListener('mouseleave', () => {
-                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
                 cursorOutline.style.backgroundColor = 'transparent';
-                cursorOutline.style.borderColor = 'var(--neon-purple)';
             });
         });
     }
@@ -114,6 +114,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start typing effect
     setTimeout(typeEffect, 1500);
+
+    // ========================================
+    // 3D HERO ELEMENT (THREE.JS)
+    // ========================================
+    const threeContainer = document.getElementById('three-js-container');
+    if (threeContainer && typeof THREE !== 'undefined') {
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        threeContainer.appendChild(renderer.domElement);
+        
+        // Create Geometry
+        const geometry = new THREE.IcosahedronGeometry(2, 1);
+        const material = new THREE.MeshBasicMaterial({ 
+            color: 0x00f0ff, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.5
+        });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+        
+        camera.position.z = 5;
+        
+        // Responsive
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        function animateThree() {
+            requestAnimationFrame(animateThree);
+            sphere.rotation.x += 0.003;
+            sphere.rotation.y += 0.005;
+            
+            // Subtle floating motion
+            sphere.position.y = Math.sin(Date.now() * 0.001) * 0.2;
+            
+            // Update color based on theme
+            const theme = document.documentElement.getAttribute('data-theme');
+            let themeColor;
+            switch(theme) {
+                case 'purple': themeColor = 0xbd00ff; break;
+                case 'green': themeColor = 0x00ff88; break;
+                case 'orange': themeColor = 0xff8800; break;
+                default: themeColor = 0x00f0ff;
+            }
+            sphere.material.color.setHex(themeColor);
+            
+            renderer.render(scene, camera);
+        }
+        
+        animateThree();
+    }
 
     // ========================================
     // SCROLL REVEAL ANIMATION
@@ -230,8 +287,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.size = Math.random() * 2;
                 this.speedX = (Math.random() - 0.5) * 0.5;
                 this.speedY = (Math.random() - 0.5) * 0.5;
-                // Random color between cyan and purple
-                this.color = Math.random() > 0.5 ? 'rgba(0, 240, 255, 0.5)' : 'rgba(189, 0, 255, 0.5)';
+                this.updateColor();
+            }
+
+            updateColor() {
+                const theme = document.documentElement.getAttribute('data-theme') || 'cyan';
+                let color1, color2;
+                
+                switch(theme) {
+                    case 'purple': color1 = 'rgba(189, 0, 255, 0.5)'; color2 = 'rgba(255, 0, 127, 0.5)'; break;
+                    case 'green': color1 = 'rgba(0, 255, 136, 0.5)'; color2 = 'rgba(0, 240, 255, 0.5)'; break;
+                    case 'orange': color1 = 'rgba(255, 136, 0, 0.5)'; color2 = 'rgba(255, 0, 127, 0.5)'; break;
+                    default: color1 = 'rgba(0, 240, 255, 0.5)'; color2 = 'rgba(189, 0, 255, 0.5)';
+                }
+                
+                this.color = Math.random() > 0.5 ? color1 : color2;
             }
 
             update() {
@@ -329,5 +399,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initial call
         setCanvasSize();
         animateParticles();
+
+        // Global function to update particle colors on theme change
+        window.updateParticleColors = function() {
+            particlesArray.forEach(p => p.updateColor());
+        };
     }
 });
